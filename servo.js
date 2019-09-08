@@ -13,9 +13,9 @@ function pushProduct(servo) {
     target.stop();
   }
 
-  servo.cw(1);
+  servo.ccw(1);
 
-  setTimeout(stopServo, 5000, servo);
+  setTimeout(stopServo, 1000, servo);
 }
 
 board.on('ready', () => {
@@ -32,5 +32,5 @@ board.on('ready', () => {
     servos.push(servo);
   }
 
-  pushProduct(servos[2]);
+  pushProduct(servos[4]);
 });

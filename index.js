@@ -1,40 +1,36 @@
+/* eslint-disable no-console */
+
 const {
   Board,
   Servo,
-  Led,
 } = require('johnny-five');
 
 const board = new Board();
 const controller = 'PCA9685';
 
-function toggleLed(led, duration) {
-  function switchOff(target) {
-    target.off();
+function pushProduct(servo) {
+  function stopServo(target) {
+    target.stop();
   }
 
-  led.on();
+  servo.ccw(1);
 
-  setTimeout(switchOff, duration, led);
+  setTimeout(stopServo, 1000, servo);
 }
 
 board.on('ready', () => {
-  const servo = new Servo.Continuous({
-    controller,
-    pin: 8,
-  });
+  console.log('Connected to the board...');
 
-  servo.cw();
-
-  const leds = [];
+  const servos = [];
 
   for (let i = 0; i < 8; i += 1) {
-    const led = new Led({
-      pin: i,
+    const servo = new Servo.Continuous({
       controller,
+      pin: i,
     });
 
-    leds.push(led);
+    servos.push(servo);
   }
 
-  toggleLed(leds[3], 2000);
+  pushProduct(servos[4]);
 });
